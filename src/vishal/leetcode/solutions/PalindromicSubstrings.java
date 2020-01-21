@@ -12,15 +12,28 @@ public class PalindromicSubstrings {
 
 	public int countSubstrings(String s) {
 		int count = 0;
-		for (int i = 0; i < s.length(); i++) {
+		int len = s.length();
+		boolean dp[][] = new boolean[len][len];
+		for (int i = 0; i < len; i++) {
 			count++;
-			for (int j = i + 1; j < s.length(); j++) {
-				StringBuilder str = new StringBuilder(s.substring(i, j + 1));
-				if (str.toString().equals(str.reverse().toString())) {
-					count++;
+			dp[i][i] = true;
+		}
+		for (int j = 1; j < len; j++) {
+			for (int i = 0; i < j; i++) {
+				if (s.charAt(i) == s.charAt(j)) {
+					if ((j - i <= 2) || (dp[i + 1][j - 1])) {
+						count++;
+						dp[i][j] = true;
+					}
+				} else {
+					dp[i][j] = false;
 				}
 			}
 		}
+		/*
+		 * for (int i=0 ; i<len ; i++) { for (int j=0 ; j<len ; j++) {
+		 * System.out.print(dp[i][j] + " "); } System.out.println(); }
+		 */
 		return count;
 	}
 
